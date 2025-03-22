@@ -117,10 +117,28 @@ async function vote(team) {
     try {
       const token = await createIdToken();
 
-      /*
-       * ++++ YOUR CODE HERE ++++
-       */
-      window.alert(`Not implemented yet!`);
+      const response = await fetch("/",{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": `Bearer ${token}`
+        },
+        
+        body: new URLSearchParams({
+          team: team
+        }),
+      
+      });
+
+      if(response.ok){
+        window.alert(`Vote submitted!`)
+      }
+      else{
+        const err2 = await response.json();
+        console.error("Vote failed:", err2);
+      }
+
+
 
     } catch (err) {
       console.log(`Error when submitting vote: ${err}`);
